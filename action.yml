@@ -1,0 +1,10 @@
+name: Safe Deploy Check
+description: Checks for risk factors before deployment and returns a deploy risk score.
+inputs:
+  github_token:
+    description: "GitHub Token"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  
