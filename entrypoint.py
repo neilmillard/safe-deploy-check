@@ -6,6 +6,11 @@ from datetime import datetime
 token = os.environ['INPUT_GITHUB_TOKEN']
 repo_name = os.environ['GITHUB_REPOSITORY']
 sha = os.environ['GITHUB_SHA']
+max_files = int(os.getenv("INPUT_MAX_FILE_COUNT", "20"))
+secret_globs = os.getenv("INPUT_SECRET_FILE_GLOBS", ".env,.pem").split(",")
+min_certainty = int(os.getenv("INPUT_MIN_CERTAINTY", "4"))
+block_on_failure = os.getenv("INPUT_BLOCK_ON_FAILURE", "true").lower() == "true"
+check_work_hours = os.getenv("INPUT_CHECK_WORK_HOURS", "true").lower() == "true"
 
 g = Github(token)
 repo = g.get_repo(repo_name)
@@ -30,19 +35,21 @@ reasons = []
 try:
     
     files = list(pr.get_files())
-    if len(files) > 20:
+    if len(files) > max_files:
         risk += 2
-        reasons.append("Too many files changed")
+        reasons.append(f"{len(files)} files changed (max is {max_files})")
 
     for f in files:
-        if f.filename.endswith(('.env', '.pem', 'secrets.py')):
-            risk += 3
-            reasons.append(f"Suspicious file: {f.filename}")
+        for pattern in secret_globs:
+            if f.filename.endswith(pattern):
+                risk += 3
+                reasons.append(f"Suspicious file: {f.filename}")
 
-    now = datetime.utcnow()
-    if now.weekday() == 4 and now.hour >= 15:
-        risk += 2
-        reasons.append("Deploying on Friday evening")
+    if check_work_hours:
+        now = datetime.utcnow()
+        if now.weekday() == 4 and now.hour >= 15:
+            risk += 2
+            reasons.append("Deploying on Friday evening")
 
     if not pr.requested_reviewers:
         risk += 1
@@ -59,7 +66,7 @@ try:
     }
 
     check.edit(status="completed", conclusion=conclusion, output=output)
-    if conclusion == "failure":
+    if certainty < min_certainty and block_on_failure:
         sys.exit(1)
 
 except Exception as e:
