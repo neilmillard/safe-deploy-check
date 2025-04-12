@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Safe Deploy Check
-        uses: your-org/safe-deploy-check@v1
+        uses: neilmillard/safe-deploy-check@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           max_file_count: 20
