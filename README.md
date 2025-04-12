@@ -21,4 +21,9 @@ jobs:
         uses: your-org/safe-deploy-check@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          max_file_count: 20
+          secret_file_globs: ".env,.key,.pem"
+          min_certainty: 4
+          block_on_failure: true
+          check_work_hours: true
 ```
