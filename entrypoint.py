@@ -2,6 +2,7 @@ import os
 import sys
 from github import Github
 from datetime import datetime
+from risk import assess_risk
 
 token = os.environ['INPUT_GITHUB_TOKEN']
 repo_name = os.environ['GITHUB_REPOSITORY']
@@ -35,28 +36,8 @@ reasons = []
 try:
     
     files = list(pr.get_files())
-    if len(files) > max_files:
-        risk += 2
-        reasons.append(f"{len(files)} files changed (max is {max_files})")
-
-    for f in files:
-        for pattern in secret_globs:
-            if f.filename.endswith(pattern):
-                risk += 3
-                reasons.append(f"Suspicious file: {f.filename}")
-
-    if check_work_hours:
-        now = datetime.utcnow()
-        if now.weekday() == 4 and now.hour >= 15:
-            risk += 2
-            reasons.append("Deploying on Friday evening")
-
-    if not pr.requested_reviewers:
-        risk += 1
-        reasons.append("No reviewer assigned")
-
-   certainty = max(0, 10 - risk)
-
+    certainty, reasons = assess_risk(files, pr.requested_reviewers, check_work_hours, max_files, secret_globs, datetime.now(datetime.UTC))
+    
     conclusion = "success" if certainty >= 7 else "neutral" if certainty >= 4 else "failure"
 
     output = {
