@@ -4,7 +4,7 @@ def assess_risk(changed_files, reviewers, check_work_hours=True, max_files=20, s
     risk = 0
     reasons = []
     secret_globs = secret_globs or ['.env', '.pem', 'secrets.py']
-    current_time = current_time or datetime.utcnow()
+    current_time = current_time or datetime.now(datetime.UTC)
 
     # File count check
     if len(changed_files) > max_files:
