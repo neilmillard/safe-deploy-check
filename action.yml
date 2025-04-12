@@ -1,10 +1,30 @@
 name: Safe Deploy Check
-description: Checks for risk factors before deployment and returns a deploy risk score.
+description: Prevent risky deployments by analyzing PR context and issuing a Certainty Score.
 inputs:
   github_token:
     description: "GitHub Token"
     required: true
+
+  max_file_count:
+    description: "Max number of changed files allowed before warning"
+    default: "20"
+
+  secret_file_globs:
+    description: "Comma-separated list of sensitive file patterns"
+    default: ".env,.pem,secrets.py"
+
+  min_certainty:
+    description: "Minimum Certainty Score required to pass"
+    default: "7"
+
+  block_on_failure:
+    description: "Whether to fail the action if risk is high"
+    default: "true"
+
+  check_work_hours:
+    description: "Warn if deploying on a Friday afternoon or weekend"
+    default: "true"
+
 runs:
   using: "docker"
   image: "Dockerfile"
-  
