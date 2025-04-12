@@ -36,7 +36,7 @@ reasons = []
 try:
     
     files = list(pr.get_files())
-    certainty, reasons = assess_risk(files, pr.requested_reviewers, check_work_hours, max_files, secret_globs, datetime.now(datetime.UTC))
+    certainty, reasons = assess_risk(files, pr.requested_reviewers, check_work_hours, max_files, secret_globs)
     
     conclusion = "success" if certainty >= 7 else "neutral" if certainty >= 4 else "failure"
 
