@@ -10,6 +10,35 @@ on:
       - '!.github/workflows/docker-build-push.yml'
 
 jobs:
+  test:
+    outputs:
+      status: ${{ steps.test.conclusion }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: install deps
+        run: pip install -r requirements.txt
+
+      - name: install pytest
+        run: pip install pytest pytest-cov
+
+      - id: test
+        name: test
+        run: pytest --cov --cov-branch --cov-report=xml tests
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
