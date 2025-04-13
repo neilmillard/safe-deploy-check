@@ -44,7 +44,8 @@ jobs:
     permissions:
       contents: read
       packages: write
-
+    needs: test
+    if: steps.test.conclusion == 'success'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
