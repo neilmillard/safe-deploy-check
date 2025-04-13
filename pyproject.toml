@@ -1,0 +1,17 @@
+
+[project]
+name = "safe-deploy-check"
+version = "0.1.0"
+description = "Safe Deploy Check for GitHub Actions"
+requires-python = ">=3.12"
+authors = [
+    "Neil Millard <neil@neilmillard.com>",
+]
+readme = "README.md"
+package-mode = false
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
