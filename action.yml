@@ -27,4 +27,4 @@ inputs:
 
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "ghcr.io/neilmillard/safe-deploy-check:v1"
