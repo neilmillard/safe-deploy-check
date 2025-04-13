@@ -22,11 +22,11 @@ jobs:
         run: pip install -r requirements.txt
         
       - name: install pytest
-        run: pip install pytest
+        run: pip install pytest pytest-cov
 
       - id: test
         name: test
-        run: pytest tests
+        run: pytest --cov --cov-branch --cov-report=xml tests
 
   read_version_file:
     runs-on: ubuntu-latest
