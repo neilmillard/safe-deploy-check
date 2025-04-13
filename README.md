@@ -1,7 +1,7 @@
 # safe-deploy-check
 [![Marketplace](https://img.shields.io/badge/GitHub%20Action-marketplace-blue?logo=github&logoColor=white)](https://github.com/marketplace/actions/safe-deploy-check)
 [![GitHub tag](https://img.shields.io/github/v/tag/neilmillard/safe-deploy-check?label=version)](https://github.com/neilmillard/safe-deploy-check/tags)
-[![Build Status](https://github.com/neilmillard/safe-deploy-check/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/neilmillard/safe-deploy-check/actions/workflows/test.yml)
+[![Build Status](https://github.com/neilmillard/safe-deploy-check/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/neilmillard/safe-deploy-check/actions/workflows/docker-build-push.yml)
 [![codecov](https://codecov.io/gh/neilmillard/safe-deploy-check/branch/main/graph/badge.svg)](https://codecov.io/gh/neilmillard/safe-deploy-check)
 
 A smart deployment safety net that verifies, monitors, and ensures best practices before, during, and after deployments
