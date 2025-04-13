@@ -1,0 +1,43 @@
+name: PR Workflow
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      
+      - name: install deps
+        run: pip install -r requirements.txt
+        
+      - name: install pytest
+        run: pip install pytest
+
+      - name: test
+        run: pytest tests
+
+  run-certainty-score:
+    runs-on: ubuntu-latest
+
+    # Give checks write permission to the Default GITHUB_TOKEN
+    permissions:
+      checks: write
+      
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Test Safe Deploy Action
+        uses: neilmillard/safe-deploy-check@First-draft
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          max_file_count: 10
+          
