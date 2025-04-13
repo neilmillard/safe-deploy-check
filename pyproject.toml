@@ -1,7 +1,7 @@
 
 [project]
 name = "safe-deploy-check"
-version = "0.1.0"
+version = "1.0.0"
 description = "Safe Deploy Check for GitHub Actions"
 requires-python = ">=3.12"
 authors = [
