@@ -13,6 +13,11 @@ on:
 jobs:
   safe-check:
     runs-on: ubuntu-latest
+    
+    # Give checks write permission to the Default GITHUB_TOKEN
+    permissions:
+      checks: write
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
