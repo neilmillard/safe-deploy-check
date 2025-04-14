@@ -16,19 +16,16 @@ on:
     branches: [main]
 
 jobs:
-  safe-check:
+    safe-check:
     runs-on: ubuntu-latest
-    
-    # Give checks write permission to the Default GITHUB_TOKEN
+
     permissions:
       checks: write
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      pull-requests: read
 
+    steps:
       - name: Safe Deploy Check
-        uses: neilmillard/safe-deploy-check@v1
+        uses: neilmillard/safe-deploy-check@v1.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           max_file_count: 20
