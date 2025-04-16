@@ -51,7 +51,7 @@ The JSON output of the score results
     "conclusion": "success",
     "score": 82,
     "reasons": ["No reviewers", "Changed env file"],
-    "files": ["config/.env"],
+    "files": ["config/.env"]
 }
 ```
 
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Safe Deploy Check
-        uses: neilmillard/safe-deploy-check@v1.1
+        uses: neilmillard/safe-deploy-check@v1.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           max_file_count: 20
