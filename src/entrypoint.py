@@ -7,6 +7,11 @@ from src.github_gateway import GitHubGateway
 from src.risk import assess_risk
 
 
+def create_and_display_output(certainty_score: CertaintyScore):
+    os.environ['GITHUB_OUTPUT'] = f"certainty_score={certainty_score.score}\nsummary={certainty_score.to_json()}"
+    print(certainty_score.to_json())
+
+
 def main():
     error = False
     logger = logging.getLogger(__name__)
@@ -51,6 +56,9 @@ def main():
         )
 
         gg.update_check_run_with_score(repo, check_id, certainty_score)
+
+        #Update the output
+        create_and_display_output(certainty_score)
 
         # Verify check data
         gg.get_check_run_certainty_score(repo, sha)
