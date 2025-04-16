@@ -3,7 +3,7 @@ import os
 from datetime import datetime, UTC
 from typing import Optional
 
-from github import Github, PullRequest, Repository
+from github import Auth, Github, PullRequest, Repository
 
 from src.certainty_score import CertaintyScore
 
@@ -23,7 +23,7 @@ class GitHubGateway:
         self.github_token = github_token or os.getenv("INPUT_GITHUB_TOKEN")
         if not self.github_token:
             raise ValueError("GitHub token is required but not provided")
-        self.client = Github(self.github_token)
+        self.client = Github(auth=Auth.Token(self.github_token))
 
     def get_repo(self, repo_name: str) -> Repository.Repository:
         """
