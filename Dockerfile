@@ -3,5 +3,5 @@ COPY src/ /app/src
 WORKDIR /app
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
-ENV PYTHONPATH="${PYTHONPATH}:/app"
+ENV PYTHONPATH="/app"
 ENTRYPOINT ["python", "/app/src/entrypoint.py"]
