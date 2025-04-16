@@ -24,6 +24,11 @@ inputs:
   check_work_hours:
     description: "Warn if deploying on a Friday afternoon or weekend"
     default: "true"
+  outputs:
+    certainty_score:
+      description: 'The Score as an int'
+    summary:
+      description: 'The full score output as json. This is also on the check'
 
 runs:
   using: "docker"
